@@ -3,6 +3,7 @@ export {
     SheetPageProps,
     FullScreenSheetStyle,
     FormSheetStyle,
-    PageSheetStyle
+    PageSheetStyle,
+    SheetPosition
 } from "./Sheet"
 export { default as useSheetState } from "./useSheetState"
