@@ -1,6 +1,6 @@
 const generateId = (length: number): string => {
     let result = ''
-    let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     let charsLength = chars.length
     for (let i = 0; i < length; i++) {
         result += chars.charAt(Math.floor(Math.random() * charsLength))

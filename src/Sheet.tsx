@@ -1,7 +1,10 @@
-import React, { FC, CSSProperties, useState } from 'react'
+import React, {
+    FC, CSSProperties, useState, ReactElement, cloneElement
+} from 'react'
 import DelayedRemoval from './DelayedRemoval'
 import generateId from './generateId'
 import Portal from './Portal'
+import useInjectSheetCSS from './useInjectSheetCSS'
 
 export interface SheetSettings {
     duration?: number
@@ -81,19 +84,25 @@ interface SheetProps {
     isActive: boolean
     setIsActive(isActive: boolean): void
     settings?: SheetSettings
+    children: ReactElement
+}
+
+export interface SheetPageProps {
+    dismiss(): void
 }
 
 const defaultSettings = FullScreenSheetStyle()
 
 const Sheet: FC<SheetProps> = ({ isActive, setIsActive, settings = defaultSettings, children }) => {
-    const [id] = useState(generateId(8))
+    useInjectSheetCSS()
+    const [id] = useState(generateId(16))
     return <DelayedRemoval interval={settings.duration ?? 0.3} mount={isActive}>
         <Portal id={id}>
-            {settings.shadow ? <div className="__rs-shadow" style={settings.shadowStyle ?? defaultShadowStyle} onClick={() => {
+            {settings.shadow ? <div className="__rsp-shadow" style={settings.shadowStyle ?? defaultShadowStyle} onClick={() => {
                 setIsActive(false)
             }} />: <></>}
-            <div className="__rs-sheet" style={settings.style ?? defaultSheetStyle}>
-                {children}
+            <div className="__rsp-sheet" style={settings.style ?? defaultSheetStyle}>
+                {cloneElement(children, { dismiss: () => setIsActive(false) })}
             </div>
         </Portal>
     </DelayedRemoval>
