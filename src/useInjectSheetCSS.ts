@@ -113,14 +113,6 @@ const useInjectSheetCSS = useHeadStyleInjection(
         animation: 0.3s ease-in-out 0s __rsp-shadow-hide forwards;
     }
 
-    .__rsp-sheet.__rsp-enter {
-        animation: 0.3s ease-in-out 0s __rsp-reveal-from-bottom forwards;
-    }
-
-    .__rsp-sheet.__rsp-leave {
-        animation: 0.3s ease-in-out 0s __rsp-hide-to-bottom forwards;
-    }
-
     .__rsp-sheet.__rsp-enter.__rsp-direction-bottom {
         animation: 0.3s ease-in-out 0s __rsp-reveal-from-bottom forwards;
     }
