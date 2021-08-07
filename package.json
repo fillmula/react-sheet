@@ -1,6 +1,6 @@
 {
     "name": "react-sheet-presentation",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "description": "Sheet presentation for React.js",
     "types": "lib/index.d.ts",
     "main": "lib/index.js",

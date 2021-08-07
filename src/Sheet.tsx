@@ -60,13 +60,21 @@ const sheetClassNameFrom = (position: SheetPosition) => {
     }
 }
 
-export const FormSheetStyle = (
-    position: SheetPosition = SheetPosition.Bottom,
-    duration: number = 0.3,
-    shadow: boolean = true,
-    shadowClassName: string = '',
-    sheetClassName: string = '',
-): SheetSettings => {
+interface FullScreenSheetStyleParams {
+    position?: SheetPosition
+    duration?: number,
+    shadow?: boolean
+    shadowClassName?: string
+    sheetClassName?: string
+}
+
+export const FullScreenSheetStyle: (params: FullScreenSheetStyleParams) => SheetSettings = ({
+    position = SheetPosition.Bottom,
+    duration = 0.3,
+    shadow = true,
+    shadowClassName = '',
+    sheetClassName = '',
+}): SheetSettings => {
     return {
         duration: duration,
         shadow: shadow,
@@ -77,13 +85,21 @@ export const FormSheetStyle = (
     }
 }
 
-export const PageSheetStyle = (
-    position: SheetPosition = SheetPosition.Bottom,
-    duration: number = 0.3,
-    shadow: boolean = true,
-    shadowClassName: string = '',
-    sheetClassName: string = '',
-): SheetSettings => {
+interface FormSheetStyleParams {
+    position?: SheetPosition
+    duration?: number,
+    shadow?: boolean
+    shadowClassName?: string
+    sheetClassName?: string
+}
+
+export const FormSheetStyle: (params: FormSheetStyleParams) => SheetSettings = ({
+    position = SheetPosition.Bottom,
+    duration = 0.3,
+    shadow = true,
+    shadowClassName = '',
+    sheetClassName = '',
+}): SheetSettings => {
     return {
         duration: duration,
         shadow: shadow,
@@ -94,13 +110,21 @@ export const PageSheetStyle = (
     }
 }
 
-export const FullScreenSheetStyle = (
-    position: SheetPosition = SheetPosition.Bottom,
-    duration: number = 0.3,
-    shadow: boolean = true,
-    shadowClassName: string = '',
-    sheetClassName: string = '',
-): SheetSettings => {
+interface PageSheetStyleParams {
+    position?: SheetPosition
+    duration?: number,
+    shadow?: boolean
+    shadowClassName?: string
+    sheetClassName?: string
+}
+
+export const PageSheetStyle: (params: PageSheetStyleParams) => SheetSettings = ({
+    position = SheetPosition.Bottom,
+    duration = 0.3,
+    shadow = true,
+    shadowClassName = '',
+    sheetClassName = '',
+}): SheetSettings => {
     return {
         duration: duration,
         shadow: shadow,
@@ -128,7 +152,7 @@ export interface SheetPageProps {
     dismiss(): void
 }
 
-const defaultSettings = FullScreenSheetStyle()
+const defaultSettings = FullScreenSheetStyle({})
 
 const Sheet: FC<SheetProps> = ({ isActive, setIsActive, settings = defaultSettings, children }) => {
     useInjectSheetCSS()
