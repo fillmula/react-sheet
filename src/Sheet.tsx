@@ -1,5 +1,5 @@
 import React, {
-    FC, CSSProperties, useState, ReactElement, cloneElement
+    FC, CSSProperties, useState, ReactElement, cloneElement, useEffect
 } from 'react'
 import DelayedRemoval from './DelayedRemoval'
 import generateId from './generateId'
@@ -87,6 +87,12 @@ interface SheetProps {
     children: ReactElement
 }
 
+enum SheetStatus {
+    Enter,
+    Leave,
+    Static
+}
+
 export interface SheetPageProps {
     dismiss(): void
 }
@@ -96,12 +102,36 @@ const defaultSettings = FullScreenSheetStyle()
 const Sheet: FC<SheetProps> = ({ isActive, setIsActive, settings = defaultSettings, children }) => {
     useInjectSheetCSS()
     const [id] = useState(generateId(16))
+    const [status, setStatus] = useState(SheetStatus.Static)
+    useEffect(() => {
+        if (isActive) {
+            setStatus(SheetStatus.Enter)
+            const handler = setTimeout(() => {
+                setStatus(SheetStatus.Static)
+            }, (settings.duration ?? 0.3) * 1000)
+            return () => {
+                clearInterval(handler)
+            }
+        } else {
+            setStatus(SheetStatus.Leave)
+        }
+    }, [isActive])
+    const classNameFromStatus = () => {
+        switch (status) {
+            case SheetStatus.Enter:
+                return ' __rsp-enter'
+            case SheetStatus.Static:
+                return ' __rsp-static'
+            case SheetStatus.Leave:
+                return ' __rsp-leave'
+        }
+    }
     return <DelayedRemoval interval={settings.duration ?? 0.3} mount={isActive}>
         <Portal id={id}>
-            {settings.shadow ? <div className="__rsp-shadow" style={settings.shadowStyle ?? defaultShadowStyle} onClick={() => {
+            {settings.shadow ? <div className={`__rsp-shadow${classNameFromStatus()}`} style={settings.shadowStyle ?? defaultShadowStyle} onClick={() => {
                 setIsActive(false)
             }} />: <></>}
-            <div className="__rsp-sheet" style={settings.style ?? defaultSheetStyle}>
+            <div className={`__rsp-sheet${classNameFromStatus()}`} style={settings.style ?? defaultSheetStyle}>
                 {cloneElement(children, { dismiss: () => setIsActive(false) })}
             </div>
         </Portal>
