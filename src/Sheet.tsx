@@ -15,6 +15,8 @@ export interface SheetSettings {
     shadowStyle?: CSSProperties
     shadowEnterStyle?: CSSProperties
     shadowLeaveStyle?: CSSProperties
+    shadowClassName?: string
+    sheetClassName?: string
 }
 
 export enum SheetPosition {
@@ -41,42 +43,71 @@ const defaultSheetStyle: CSSProperties = {
     'right': 0
 }
 
+const shadowClassNameFrom = (position: SheetPosition) => {
+    return ''
+}
+
+const sheetClassNameFrom = (position: SheetPosition) => {
+    switch (position) {
+        case SheetPosition.Top:
+            return ' __rsp-direction-top'
+        case SheetPosition.Bottom:
+            return ' __rsp-direction-bottom'
+        case SheetPosition.Left:
+            return ' __rsp-direction-left'
+        case SheetPosition.Right:
+            return ' __rsp-direction-right'
+    }
+}
+
 export const FormSheetStyle = (
     position: SheetPosition = SheetPosition.Bottom,
     duration: number = 0.3,
-    shadow: boolean = true
+    shadow: boolean = true,
+    shadowClassName: string = '',
+    sheetClassName: string = '',
 ): SheetSettings => {
     return {
         duration: duration,
         shadow: shadow,
         shadowStyle: defaultShadowStyle,
-        style: defaultSheetStyle
+        style: defaultSheetStyle,
+        shadowClassName: shadowClassName + shadowClassNameFrom(position),
+        sheetClassName: sheetClassName + sheetClassNameFrom(position)
     }
 }
 
 export const PageSheetStyle = (
     position: SheetPosition = SheetPosition.Bottom,
     duration: number = 0.3,
-    shadow: boolean = true
+    shadow: boolean = true,
+    shadowClassName: string = '',
+    sheetClassName: string = '',
 ): SheetSettings => {
     return {
         duration: duration,
         shadow: shadow,
         shadowStyle: defaultShadowStyle,
-        style: defaultSheetStyle
+        style: defaultSheetStyle,
+        shadowClassName: shadowClassName + shadowClassNameFrom(position),
+        sheetClassName: sheetClassName + sheetClassNameFrom(position)
     }
 }
 
 export const FullScreenSheetStyle = (
     position: SheetPosition = SheetPosition.Bottom,
     duration: number = 0.3,
-    shadow: boolean = true
+    shadow: boolean = true,
+    shadowClassName: string = '',
+    sheetClassName: string = '',
 ): SheetSettings => {
     return {
         duration: duration,
         shadow: shadow,
         shadowStyle: defaultShadowStyle,
-        style: defaultSheetStyle
+        style: defaultSheetStyle,
+        shadowClassName: shadowClassName + shadowClassNameFrom(position),
+        sheetClassName: sheetClassName + sheetClassNameFrom(position)
     }
 }
 
@@ -128,10 +159,10 @@ const Sheet: FC<SheetProps> = ({ isActive, setIsActive, settings = defaultSettin
     }
     return <DelayedRemoval interval={settings.duration ?? 0.3} mount={isActive}>
         <Portal id={id}>
-            {settings.shadow ? <div className={`__rsp-shadow${classNameFromStatus()}`} style={settings.shadowStyle ?? defaultShadowStyle} onClick={() => {
+            {settings.shadow ? <div className={`__rsp-shadow${classNameFromStatus()}${settings.shadowStyle}`} style={settings.shadowStyle ?? defaultShadowStyle} onClick={() => {
                 setIsActive(false)
             }} />: <></>}
-            <div className={`__rsp-sheet${classNameFromStatus()}`} style={settings.style ?? defaultSheetStyle}>
+            <div className={`__rsp-sheet${classNameFromStatus()}${settings.sheetClassName}`} style={settings.style ?? defaultSheetStyle}>
                 {cloneElement(children, { dismiss: () => setIsActive(false) })}
             </div>
         </Portal>
