@@ -183,10 +183,10 @@ const Sheet: FC<SheetProps> = ({ isActive, setIsActive, settings = defaultSettin
     }
     return <DelayedRemoval interval={settings.duration ?? 0.3} mount={isActive}>
         <Portal id={id}>
-            {settings.shadow ? <div className={`__rsp-shadow${classNameFromStatus()}${settings.shadowStyle}`} style={settings.shadowStyle ?? defaultShadowStyle} onClick={() => {
+            {settings.shadow ? <div className={`__rsp-shadow${classNameFromStatus()} ${settings.shadowClassName}`} style={settings.shadowStyle ?? defaultShadowStyle} onClick={() => {
                 setIsActive(false)
             }} />: <></>}
-            <div className={`__rsp-sheet${classNameFromStatus()}${settings.sheetClassName}`} style={settings.style ?? defaultSheetStyle}>
+            <div className={`__rsp-sheet${classNameFromStatus()} ${settings.sheetClassName}`} style={settings.style ?? defaultSheetStyle}>
                 {cloneElement(children, { dismiss: () => setIsActive(false) })}
             </div>
         </Portal>
