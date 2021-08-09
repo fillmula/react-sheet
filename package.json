@@ -11,7 +11,7 @@
         "type": "git",
         "url": "git+https://github.com/fillmula/react-sheet-presentation.git"
     },
-    "author": "",
+    "author": "Victor Teo",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/fillmula/react-sheet-presentation/issues"
