@@ -1,11 +1,12 @@
-import { FC } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 
-interface PortalProps {
+type PortalProps = {
   id: string
+  children: ReactNode
 }
 
-const Portal: FC<PortalProps> = ({ children, id }) => {
+const Portal: (PortalProps) => ReactElement = ({ children, id }) => {
   const containerInDom = document.querySelector(`#${id}`)
   let container: Element
   if (!containerInDom) {
