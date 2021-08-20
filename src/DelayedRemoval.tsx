@@ -1,11 +1,12 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { useState, useEffect, ReactNode, ReactElement } from 'react'
 
-interface DelayedRemovalProps {
+type DelayedRemovalProps = {
   mount: boolean
   interval: number
+  children: ReactNode
 }
 
-const DelayedRemoval: FC<DelayedRemovalProps> = ({
+const DelayedRemoval: (props: DelayedRemovalProps) => ReactElement = ({
   mount, interval, children
 }) => {
 
