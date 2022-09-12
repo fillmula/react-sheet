@@ -6,7 +6,7 @@ type PortalProps = {
   children: ReactNode
 }
 
-const Portal: (PortalProps) => ReactElement = ({ children, id }) => {
+const Portal: (props: PortalProps) => ReactElement = ({ children, id }) => {
   const containerInDom = document.querySelector(`#${id}`)
   let container: Element
   if (!containerInDom) {
